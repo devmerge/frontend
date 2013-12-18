@@ -4,6 +4,7 @@ require.config({
 	deps: ['main'],
 	paths: {
 		backbone: '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min',
+		facebook: '//connect.facebook.net/en_US/all',
 		handlebars: '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.4/handlebars.min',
 		jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min',
 		'backbone.layoutmanager': '//cdnjs.cloudflare.com/ajax/libs/backbone.layoutmanager/0.8.8/backbone.layoutmanager.min',
@@ -13,6 +14,9 @@ require.config({
 		backbone: {
 			deps: ['underscore', 'jquery'],
 			exports: 'Backbone'
+		},
+		facebook: {
+			exports: 'FB'
 		},
 		handlebars: {
 			exports: 'Handlebars'

@@ -4,14 +4,16 @@ define(
 	'app',
 	'router',
 	'templates.built',
-	'modules/Session/Base'
+	'modules/Session/Facebook',
+	'facebook'
 ],
 function (
 	$, _, Handlebars, Backbone,
 	app,
 	Router,
 	templatesBuilt,
-	Session
+	Session,
+	FB
 ) {
 	var JST = window.JST = _.extend(window.JST || {}, templatesBuilt);
 
@@ -36,8 +38,20 @@ function (
 	app.router = new Router();
 
 	app.session = new Session();
-	app.session.on('signOut', function () {
-		app.router.navigate('/', {trigger: true});
+	app.session
+		.on('signIn', function () {
+			Backbone.history.navigate('/map', true);
+		})
+		.on('signOut', function () {
+			app.router.navigate('/', {trigger: true});
+		});
+
+	FB.init({
+		appId: '172861062923958',
+		channelUrl: 'http://www.devmerge.com/channel.html',
+		status: false,
+		cookie: true,
+		xfbml: false
 	});
 
 	Backbone.history.start({

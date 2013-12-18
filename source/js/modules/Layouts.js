@@ -11,7 +11,15 @@ function ($, _, Backbone, app) {
 	});
 
 	Views.Landing = Views.Base.extend({
-		template: 'layouts/landing'
+		template: 'layouts/landing',
+		events: {
+			'click button.facebook': 'login'
+		},
+		login: function (event) {
+			app.session.signIn({
+				scope: 'user_checkins'
+			});
+		}
 	});
 
 	Views['404'] = Views.Base.extend({

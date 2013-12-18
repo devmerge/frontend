@@ -17,7 +17,7 @@ function ($, _, Backbone, app) {
 		},
 		login: function (event) {
 			app.session.signIn({
-				scope: 'user_checkins'
+				scope: 'user_checkins, read_stream'
 			});
 		}
 	});

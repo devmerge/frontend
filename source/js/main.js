@@ -48,7 +48,9 @@ function (
 
 	FB.init({
 		appId: '172861062923958',
-		channelUrl: 'http://www.devmerge.com/channel.html',
+		channelUrl: '//' + window.location.hostname +
+			':' + window.location.port +
+			'/channel.html',
 		status: false,
 		cookie: true,
 		xfbml: false

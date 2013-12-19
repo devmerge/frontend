@@ -13,7 +13,7 @@ function ($, _, Backbone, app) {
 	Views.Landing = Views.Base.extend({
 		template: 'layouts/landing',
 		events: {
-			'click button.facebook': 'login'
+			'click .facebook': 'login'
 		},
 		login: function (event) {
 			app.session.signIn({

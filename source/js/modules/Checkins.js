@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'app'],
-function ($, _, Backbone, app) {
+define(['jquery', 'underscore', 'backbone', 'app', 'leaflet'],
+function ($, _, Backbone, app, L) {
 	var Models = {};
 	var Collections = {};
 	var Views = {};
@@ -38,6 +38,16 @@ function ($, _, Backbone, app) {
 		beforeRender: function () {
 		},
 		afterRender: function () {
+			console.log(this.el);
+			var map = new L.Map(this.el);
+			map.setView([1.35, 103.8], 11);
+			map.setMaxBounds(new L.LatLngBounds(
+				new L.LatLng(1.22, 103.6),
+				new L.LatLng(1.49, 104.05)
+			));
+			L.tileLayer(
+				'//{s}.tiles.mapbox.com/v3/redmart.map-272voadg/{z}/{x}/{y}.png'
+			).addTo(map);
 		}
 	});
 

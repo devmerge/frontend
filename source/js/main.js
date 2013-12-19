@@ -37,11 +37,10 @@ function (
 
 	app.router = new Router();
 
-	app.session = new Session();
-	app.session
-		.on('signIn', function () {
-			Backbone.history.navigate('/map', true);
-		})
+	app.session = new Session()
+		// .on('signIn', function () {
+		// 	Backbone.history.navigate('/map', true);
+		// })
 		.on('signOut', function () {
 			app.router.navigate('/', {trigger: true});
 		});

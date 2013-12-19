@@ -38,7 +38,6 @@ function ($, _, Backbone, app, L) {
 		beforeRender: function () {
 		},
 		afterRender: function () {
-			console.log(this.el);
 			var map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 11);
 			// map.setMaxBounds(new L.LatLngBounds(

@@ -17,7 +17,7 @@ define([
 
 		constants: constants,
 
-		api: api('http://api.example.com/'),
+		api: api('http://devmerge-ksaitor.rhcloud.com/'),
 
 		useLayout: function (layout, options) {
 			options = options || {};

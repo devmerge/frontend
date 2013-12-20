@@ -1,5 +1,11 @@
-define(['jquery', 'underscore', 'backbone', 'app'],
-function ($, _, Backbone, app) {
+define([
+	'jquery', 'underscore', 'backbone', 'app',
+	'modules/Users'
+],
+function (
+	$, _, Backbone, app,
+	Users
+) {
 	var Models = {};
 	var Collections = {};
 	var Views = {};
@@ -17,7 +23,19 @@ function ($, _, Backbone, app) {
 		},
 		login: function (event) {
 			app.session.signIn({
-				scope: 'user_checkins, read_stream'
+				scope: 'user_checkins, read_stream',
+				success: function () {
+					var user = new Users.Models.Facebook();
+					var credentials = app.session.toJSON();
+					user.save(credentials, {
+						success: function () {
+							console.trace('saved!');
+						},
+						error: function () {
+							console.trace('oops?', arguments);
+						}
+					});
+				}
 			});
 		}
 	});

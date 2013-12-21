@@ -15,7 +15,7 @@ define([
 		},
 
 		landing: function () {
-			var checkins = new Checkins.Collections.Global([], {});
+			var checkins = new Checkins.Collections.All([], {});
 			app.useLayout(Layouts.Views.Landing, {
 			}).setViews({
 				'.map': new Checkins.Views.Map({

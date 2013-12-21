@@ -4,7 +4,7 @@ function ($, _, Backbone, app, L) {
 	var Collections = {};
 	var Views = {};
 
-	Models.Global = Backbone.Model.extend({
+	Models.Checkin = Backbone.Model.extend({
 		url: function () {
 			return app.api('global');
 		},
@@ -13,13 +13,32 @@ function ($, _, Backbone, app, L) {
 		}
 	});
 
-	Collections.Global = Backbone.Collection.extend({
-		model: Models.Global,
+	Collections.Checkins = Backbone.Collection.extend({
+		model: Models.Checkin,
 		url: function () {
-			return app.api('global');
+			return app.api('checkins');
 		},
 		parse: function (response) {
 			return response;
+		},
+		initialize: function (models, options) {
+			this.options = options || {};
+		}
+	});
+
+	Collections.All = Collections.Checkins.extend({
+		url: function () {
+			return app.api('checkins', null, {
+				all: true
+			});
+		}
+	});
+
+	Collections.Since = Collections.Checkins.extend({
+		url: function () {
+			return app.api('checkins', null, {
+				since: this.options.since
+			});
 		}
 	});
 

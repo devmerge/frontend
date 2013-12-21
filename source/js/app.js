@@ -17,9 +17,9 @@ define([
 
 		constants: constants,
 
-		api: api(location.hostname === 'www.devmerge.com' ?
+		api: api(localStorage.getItem('api') === null ?
 			'http://devmerge-ksaitor.rhcloud.com/' :
-			'http://localhost:3000/'
+			localStorage.getItem('api')
 		),
 
 		useLayout: function (layout, options) {

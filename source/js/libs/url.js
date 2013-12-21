@@ -7,7 +7,7 @@ define(['underscore'], function (_) {
 		}
 
 		var config = _.extend({
-			slug: /:(\w+)/g,
+			slug: /:(\[a-z]+)/ig,
 			separator: '+'
 		}, options);
 

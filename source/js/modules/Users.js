@@ -7,10 +7,6 @@ function ($, _, Backbone, app) {
 	Models.Facebook = Backbone.Model.extend({
 		url: function () {
 			return app.api('users');
-		},
-		parse: function (response) {
-			console.trace('parssssing');
-			return {};
 		}
 	});
 

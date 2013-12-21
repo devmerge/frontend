@@ -17,7 +17,10 @@ define([
 
 		constants: constants,
 
-		api: api('http://devmerge-ksaitor.rhcloud.com/'),
+		api: api(location.hostname === 'www.devmerge.com' ?
+			'http://devmerge-ksaitor.rhcloud.com/' :
+			'http://localhost:3000/'
+		),
 
 		useLayout: function (layout, options) {
 			options = options || {};

@@ -5,7 +5,8 @@ define(
 	'router',
 	'templates.built',
 	'modules/Session/Facebook',
-	'facebook'
+	'facebook',
+	'fastclick'
 ],
 function (
 	$, _, Handlebars, Backbone,
@@ -13,7 +14,8 @@ function (
 	Router,
 	templatesBuilt,
 	Session,
-	FB
+	FB,
+	FastClick
 ) {
 	var JST = window.JST = _.extend(window.JST || {}, templatesBuilt);
 
@@ -33,6 +35,10 @@ function (
 				done(JST[bare]);
 			}, 'text');
 		}
+	});
+
+	$(function() {
+		FastClick.attach(document.body);
 	});
 
 	app.router = new Router();

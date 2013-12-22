@@ -9,7 +9,8 @@ require.config({
 		jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min',
 		'backbone.layoutmanager': '//cdnjs.cloudflare.com/ajax/libs/backbone.layoutmanager/0.8.8/backbone.layoutmanager.min',
 		underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min',
-		leaflet: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.1/leaflet'
+		leaflet: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.1/leaflet',
+		fastclick: '//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min'
 	},
 	shim: {
 		backbone: {
@@ -33,6 +34,10 @@ require.config({
 		},
 		leaflet: {
 			exports: 'L'
-		}
+		},
+		fastclick: {
+			deps: ['jquery'],
+			exports: 'FastClick'
+		},
 	}
 });

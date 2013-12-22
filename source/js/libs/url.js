@@ -6,16 +6,21 @@ define(['underscore'], function (_) {
 			url = '';
 		}
 
+		fields = fields || {};
+
 		var config = _.extend({
-			slug: /:(\[a-z]+)/ig,
+			slug: /:(\w+)/g,
 			separator: '+'
 		}, options);
 
 		var endpoint = url.replace(config.slug, function (match, name) {
 			var param = fields[name];
-			return _.isArray(param) ? _.map(param, encodeURIComponent)
-					.join(config.separator)
-				: _.isFunction(param) ? encodeURIComponent(param(name, fields))
+			return !Object.prototype.hasOwnProperty.call(fields, name) ?
+					':' + name
+				: _.isArray(param) ?
+					_.map(param, encodeURIComponent).join(config.separator)
+				: _.isFunction(param) ?
+					encodeURIComponent(param(name, fields))
 				: encodeURIComponent(param);
 
 		});

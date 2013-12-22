@@ -116,6 +116,31 @@ exports['URL string builder'] = {
 
 		test.equals(output, '//example.com/?foo=bar&count=123');
 		test.done();
+	},
+
+	'without fields': function (test) {
+		var path = '//example.com/',
+			output = this.url(path);
+
+		test.equals(output, '//example.com/');
+		test.done();
+	},
+
+	'null fields': function (test) {
+		var path = '//example.com/',
+			data = null,
+			output = this.url(path);
+
+		test.equals(output, '//example.com/');
+		test.done();
+	},
+
+	'custom port number': function (test) {
+		var path = '//example.com:3000/',
+			output = this.url(path);
+
+		test.equals(output, '//example.com:3000/');
+		test.done();
 	}
 
 };

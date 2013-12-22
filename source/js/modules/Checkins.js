@@ -136,6 +136,9 @@ function ($, _, Backbone, app, L) {
 				this.map.removeLayer(this.venues);
 			}
 			this.venues = L.geoJson(venues).addTo(this.map);
+			this.map.fitBounds(this.venues.getBounds(), {
+				padding: [30, 30]
+			});
 		}
 	});
 

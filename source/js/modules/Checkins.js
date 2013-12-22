@@ -57,9 +57,9 @@ function ($, _, Backbone, app, L) {
 		},
 		afterRender: function () {
 			var that = this;
-			var tileserver = '//{s}.tiles.mapbox.com/v3/redmart.map-272voadg/{z}/{x}/{y}.png';
+			var tileserver = '//{s}.tiles.mapbox.com/v3/sebdeckers.gk5lcjnp/{z}/{x}/{y}.png';
 			var map = this.map = new L.Map(this.el);
-			map.setView([1.35, 103.8], 11);
+			map.setView([1.35, 103.8], 12);
 			L.tileLayer(tileserver, {
 				attribution: '&copy; CloudMade, OpenStreetMap',
 			}).addTo(map);

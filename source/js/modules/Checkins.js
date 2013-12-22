@@ -57,11 +57,12 @@ function ($, _, Backbone, app, L) {
 		},
 		afterRender: function () {
 			var that = this;
+			var tileserver = '//{s}.tiles.mapbox.com/v3/redmart.map-272voadg/{z}/{x}/{y}.png';
 			var map = this.map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 11);
-			L.tileLayer(
-				'//{s}.tiles.mapbox.com/v3/redmart.map-272voadg/{z}/{x}/{y}.png'
-			).addTo(map);
+			L.tileLayer(tileserver, {
+				attribution: '&copy; CloudMade, OpenStreetMap',
+			}).addTo(map);
 			map.on('drag', function () {
 				map.stopLocate();
 			});
@@ -74,7 +75,7 @@ function ($, _, Backbone, app, L) {
 			// 		.setLocation(location)
 			// 		.fetch();
 			// }, 1000));
-			this.locateMe();
+			// this.locateMe();
 		},
 		cleanup: function () {
 			this.map.stopLocate();

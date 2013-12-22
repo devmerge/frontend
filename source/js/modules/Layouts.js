@@ -19,7 +19,11 @@ function (
 	Views.Landing = Views.Base.extend({
 		template: 'layouts/landing',
 		events: {
+			'click .location': 'location',
 			'click .facebook': 'login'
+		},
+		location: function (event) {
+			this.getView('.map').locateMe();
 		},
 		login: function (event) {
 			app.session.signIn({

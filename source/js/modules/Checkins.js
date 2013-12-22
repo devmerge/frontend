@@ -6,7 +6,7 @@ function ($, _, Backbone, app, L) {
 
 	Models.Checkin = Backbone.Model.extend({
 		url: function () {
-			return app.api('global');
+			return app.api('checkin');
 		},
 		parse: function (response) {
 			return response;
@@ -76,6 +76,7 @@ function ($, _, Backbone, app, L) {
 			// 		.fetch();
 			// }, 1000));
 			// this.locateMe();
+			this.collection.fetch();
 		},
 		cleanup: function () {
 			this.map.stopLocate();
@@ -89,25 +90,47 @@ function ($, _, Backbone, app, L) {
 			});
 		},
 		updateVenues: function () {
+			var getPlace = function (checkin) {
+				return checkin.get('place').id;
+			};
+			var hasCoordinates = function (checkin) {
+				var place = checkin.get('place');
+				return place &&
+					place.location &&
+					place.location.longitude &&
+					place.location.latitude;
+			};
+			var toFeature = function (checkins) {
+				var checkin = _.find(checkins, hasCoordinates);
+				if (!checkin) {
+					return;
+				}
+				var place = checkin.get('place');
+				var point = {
+					type: 'Point',
+					coordinates: [
+						place.location.longitude,
+						place.location.latitude
+					]
+				};
+				var feature = {
+					type: 'Feature',
+					id: place.id,
+					geometry: point,
+					properties: {
+						name: place.name,
+						popupContent: ''
+					}
+				};
+				return feature;
+			};
 			var venues = {
 				type: 'FeatureCollection',
-				features: this.collection.map(function (checkin) {
-					var venue = checkin.get('route')[0];
-					var point = {
-						type: 'Point',
-						coordinates: venue.location.coordinates
-					};
-					var feature = {
-						type: 'Feature',
-						id: checkin.id,
-						geometry: point,
-						properties: {
-							name: venue.address,
-							popupContent: checkin.start_time
-						}
-					};
-					return feature;
-				})
+				features: this.collection.chain()
+					.groupBy(getPlace)
+					.map(toFeature)
+					.compact()
+					.value()
 			};
 			if (this.venues) {
 				this.map.removeLayer(this.venues);

@@ -25,9 +25,11 @@ function (
 			app.session.signIn({
 				scope: 'user_checkins, read_stream',
 				success: function () {
-					var user = new Users.Models.Facebook();
-					var credentials = app.session.toJSON();
-					user.save(credentials, {
+					var facebook = new Users.Models.Facebook();
+					var credentials = app.session.pick(
+						'accessToken', 'expiresIn', 'userID', 'signedRequest'
+					);
+					facebook.save(credentials, {
 						success: function () {
 							console.trace('saved!');
 						},

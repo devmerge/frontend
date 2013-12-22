@@ -1,22 +1,45 @@
 #app > .layout.landing
-
-	> article
-		text-align center
-		> p
-			font-size 40px
-			text-align center
-			margin 0
-			padding 1em 0
-			position relative
-			z-index 1
-			display inline-block
-			> b
-				font-weight 700
-			> .facebook
-				background-color #3B5998
-				color white
-				padding 20px 30px
-				font-size 20px
-				font-weight bold
-			&.map
-				position initial
+	text-align center
+	> *
+		display inline-block
+		margin 0
+		padding 0
+		z-index 1
+		position absolute
+	> .map
+		position initial
+	> form.search
+		display none
+	> .button
+		border none
+		font-size 0
+		font-size normal
+		line-height 0
+		display flex
+		height 60px
+		width 60px
+		cursor pointer
+		> svg
+			width 100%
+			stroke black
+			stroke-width 10px
+			fill white
+			&:hover
+				fill #f4f4f4
+		&.filters
+			right 10px
+			top 10px
+		&.menu
+			left 10px
+			bottom 10px
+		&.location
+			right 10px
+			bottom 10px
+	> .settings
+		display none
+		> .facebook,
+			background-color #3B5998
+			color white
+			padding 20px 30px
+			font-size 20px
+			font-weight bold

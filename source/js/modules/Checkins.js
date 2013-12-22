@@ -46,26 +46,72 @@ function ($, _, Backbone, app, L) {
 		template: 'checkins/map',
 		initialize: function (options) {
 			this.options = options;
+			this.listenTo(this.collection, 'sync', this.updateVenues);
 		},
-		cleanup: function () {
-		},
-		events: {
-		},
+		map: null,
+		venues: null,
 		serialize: function () {
 			return this.collection.toJSON();
 		},
 		beforeRender: function () {
 		},
 		afterRender: function () {
-			var map = new L.Map(this.el);
+			var that = this;
+			var map = this.map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 11);
-			// map.setMaxBounds(new L.LatLngBounds(
-			// 	new L.LatLng(1.22, 103.6),
-			// 	new L.LatLng(1.49, 104.05)
-			// ));
 			L.tileLayer(
 				'//{s}.tiles.mapbox.com/v3/redmart.map-272voadg/{z}/{x}/{y}.png'
 			).addTo(map);
+			map.on('drag', function () {
+				map.stopLocate();
+			});
+			// map.on('move', _.throttle(function () {
+			// 	var location = map.getCenter();
+			// 	that.model
+			// 		.set(location)
+			// 		.fetch();
+			// 	that.collection
+			// 		.setLocation(location)
+			// 		.fetch();
+			// }, 1000));
+			this.locateMe();
+		},
+		cleanup: function () {
+			this.map.stopLocate();
+		},
+		locateMe: function (event) {
+			this.map.stopLocate();
+			this.map.locate({
+				enableHighAccuracy: true,
+				setView: true,
+				watch: true
+			});
+		},
+		updateVenues: function () {
+			var venues = {
+				type: 'FeatureCollection',
+				features: this.collection.map(function (checkin) {
+					var venue = checkin.get('route')[0];
+					var point = {
+						type: 'Point',
+						coordinates: venue.location.coordinates
+					};
+					var feature = {
+						type: 'Feature',
+						id: checkin.id,
+						geometry: point,
+						properties: {
+							name: venue.address,
+							popupContent: checkin.start_time
+						}
+					};
+					return feature;
+				})
+			};
+			if (this.venues) {
+				this.map.removeLayer(this.venues);
+			}
+			this.venues = L.geoJson(venues).addTo(this.map);
 		}
 	});
 

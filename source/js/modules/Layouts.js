@@ -20,7 +20,8 @@ function (
 		template: 'layouts/landing',
 		events: {
 			'click .location': 'location',
-			'click .facebook': 'login'
+			'click .facebook': 'login',
+			'touchmove .button': 'preventDrag'
 		},
 		location: function (event) {
 			this.getView('.map').locateMe();
@@ -43,6 +44,9 @@ function (
 					});
 				}
 			});
+		},
+		preventDrag: function (event) {
+			event.preventDefault();
 		}
 	});
 

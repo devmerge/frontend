@@ -39,6 +39,6 @@ require.config({
 		fastclick: {
 			deps: ['jquery'],
 			exports: 'FastClick'
-		},
+		}
 	}
 });

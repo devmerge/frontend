@@ -110,9 +110,10 @@ function (
 			var map = this.map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 12);
 			L.tileLayer(
-				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 				// '//{s}.tiles.mapbox.com/v3/' +
-				// 	'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png'
+				// 	'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
+				{ detectRetina: true }
 			).addTo(map);
 			// Locate
 			var lc = L.control.locate({

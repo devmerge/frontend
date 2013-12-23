@@ -61,6 +61,69 @@ function (
 		},
 		initialize: function (models, options) {
 			this.options = options || {};
+		},
+		toFeatureCollection: function () {
+			var getPlace = function (checkin) {
+				return checkin.get('place').id;
+			};
+			var hasCoordinates = function (checkin) {
+				var place = checkin.get('place');
+				return place &&
+					place.location &&
+					place.location.longitude &&
+					place.location.latitude;
+			};
+			var isActive = function (checkin) {
+				var ms = 1;
+				var s = 1000 * ms;
+				var m = 60 * s;
+				var h = 60 * m;
+				var d = 24 * h;
+
+				var now = new Date();
+				var then = new Date(checkin.get('created_time'));
+				var ago = now - then;
+				var sleep = 8 * h;
+				var today = (now.getHours() + 1) * h;
+				var cutoff = Math.min(today, sleep);
+				var active = ago < cutoff;
+
+				return active;
+			};
+			var toFeature = function (checkins) {
+				var checkin = _.find(checkins, hasCoordinates);
+				if (!checkin) {
+					return;
+				}
+				var place = checkin.get('place');
+				var point = {
+					type: 'Point',
+					coordinates: [
+						place.location.longitude,
+						place.location.latitude
+					]
+				};
+				var feature = {
+					type: 'Feature',
+					id: place.id,
+					geometry: point,
+					properties: {
+						name: place.name,
+						checkins: checkins,
+						active: _.any(checkins, isActive)
+					}
+				};
+				return feature;
+			};
+			var venues = {
+				type: 'FeatureCollection',
+				features: this.chain()
+					.groupBy(getPlace)
+					.map(toFeature)
+					.compact()
+					.value()
+			};
+			return venues;
 		}
 	});
 
@@ -145,47 +208,7 @@ function (
 			});
 		},
 		updateVenues: function () {
-			var getPlace = function (checkin) {
-				return checkin.get('place').id;
-			};
-			var hasCoordinates = function (checkin) {
-				var place = checkin.get('place');
-				return place &&
-					place.location &&
-					place.location.longitude &&
-					place.location.latitude;
-			};
-			var toFeature = function (checkins) {
-				var checkin = _.find(checkins, hasCoordinates);
-				if (!checkin) {
-					return;
-				}
-				var place = checkin.get('place');
-				var point = {
-					type: 'Point',
-					coordinates: [
-						place.location.longitude,
-						place.location.latitude
-					]
-				};
-				var feature = {
-					type: 'Feature',
-					id: place.id,
-					geometry: point,
-					properties: {
-						name: place.name
-					}
-				};
-				return feature;
-			};
-			var venues = {
-				type: 'FeatureCollection',
-				features: this.collection.chain()
-					.groupBy(getPlace)
-					.map(toFeature)
-					.compact()
-					.value()
-			};
+			var venues = this.collection.toFeatureCollection();
 			if (this.venues) {
 				this.map.removeLayer(this.venues);
 			}
@@ -203,7 +226,8 @@ function (
 				var icon = new FacebookIcon({
 					iconUrl: 'https://graph.facebook.com/' +
 						feature.id +
-						'/picture'
+						'/picture',
+					className: feature.properties.active ? 'active' : ''
 				});
 				var marker = L.marker(latlng, {
 					icon: icon,

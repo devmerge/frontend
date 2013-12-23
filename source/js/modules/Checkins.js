@@ -110,9 +110,9 @@ function (
 			var map = this.map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 12);
 			L.tileLayer(
-				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-				// '//{s}.tiles.mapbox.com/v3/' +
-				// 	'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
+				// 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+				'//{s}.tiles.mapbox.com/v3/' +
+					'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
 				{ detectRetina: true }
 			).addTo(map);
 			// Locate
@@ -173,8 +173,7 @@ function (
 					id: place.id,
 					geometry: point,
 					properties: {
-						name: place.name,
-						popupContent: ''
+						name: place.name
 					}
 				};
 				return feature;
@@ -190,9 +189,37 @@ function (
 			if (this.venues) {
 				this.map.removeLayer(this.venues);
 			}
-			this.venues = L.geoJson(venues).addTo(this.map);
+			var FacebookIcon = L.Icon.extend({
+				options: {
+					// shadowUrl: 'leaf-shadow.png',
+					// shadowSize: [50, 64],
+					// shadowAnchor: [4, 62],
+					iconSize: [50, 50],
+					iconAnchor: [25 + 5, 25 + 5],
+					popupAnchor: [-3, -76]
+				}
+			});
+			var drawFacebookMarker = function (feature, latlng) {
+				var icon = new FacebookIcon({
+					iconUrl: 'https://graph.facebook.com/' +
+						feature.id +
+						'/picture'
+				});
+				var marker = L.marker(latlng, {
+					icon: icon,
+					riseOnHover: true,
+					title: feature.properties.name
+				});
+				marker.on('click', function (event) {
+					console.log(event);
+				});
+				return marker;
+			};
+			this.venues = L.geoJson(venues, {
+				pointToLayer: drawFacebookMarker
+			}).addTo(this.map);
 			this.map.fitBounds(this.venues.getBounds(), {
-				padding: [30, 30]
+				padding: [40, 40]
 			});
 		}
 	});

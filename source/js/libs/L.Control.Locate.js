@@ -1,3 +1,5 @@
+define(['leaflet'], function (L) {
+
 /*
 Copyright (c) 2013 Dominik Moritz
 
@@ -296,3 +298,7 @@ L.Map.addInitHook(function () {
 L.control.locate = function (options) {
     return new L.Control.Locate(options);
 };
+
+return L.control.locate;
+
+});

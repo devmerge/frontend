@@ -40,9 +40,5 @@ require.config({
 			deps: ['jquery'],
 			exports: 'FastClick'
 		},
-		locatecontrol: {
-			deps: ['leaflet'],
-			exports: 'L'
-		}
 	}
 });

@@ -1,12 +1,14 @@
 define([
 	'jquery', 'underscore', 'backbone', 'app',
 	'leaflet',
-	'locatecontrol'
+	'locatecontrol',
+	'libs/iso8601'
 ],
 function (
 	$, _, Backbone, app,
 	L,
-	locatecontrol
+	locatecontrol,
+	iso8601
 ) {
 	var Models = {};
 	var Collections = {};
@@ -81,11 +83,11 @@ function (
 				var d = 24 * h;
 
 				var now = new Date();
-				var then = new Date(checkin.get('created_time'));
+				var then = new Date(Date.parse(checkin.get('created_time')));
 				var ago = now - then;
 				var sleep = 8 * h;
 				var today = (now.getHours() + 1) * h;
-				var cutoff = Math.min(today, sleep);
+				var cutoff = Math.max(today, sleep);
 				var active = ago < cutoff;
 
 				return active;
@@ -235,7 +237,7 @@ function (
 					title: feature.properties.name
 				});
 				marker.on('click', function (event) {
-					alert(
+					console.log(
 						feature.properties.active ?
 							'Merge going on today!' :
 							'No merging so far today'

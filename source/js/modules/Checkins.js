@@ -235,7 +235,11 @@ function (
 					title: feature.properties.name
 				});
 				marker.on('click', function (event) {
-					console.log(event);
+					alert(
+						feature.properties.active ?
+							'Merge going on today!' :
+							'No merging so far today'
+					);
 				});
 				return marker;
 			};

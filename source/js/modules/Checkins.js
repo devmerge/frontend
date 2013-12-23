@@ -109,8 +109,10 @@ function (
 			// Map
 			var map = this.map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 12);
-			L.tileLayer('//{s}.tiles.mapbox.com/v3/' +
-				'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png'
+			L.tileLayer(
+				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+				// '//{s}.tiles.mapbox.com/v3/' +
+				// 	'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png'
 			).addTo(map);
 			// Locate
 			var lc = L.control.locate({

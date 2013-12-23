@@ -1,8 +1,46 @@
-define(['jquery', 'underscore', 'backbone', 'app', 'leaflet'],
-function ($, _, Backbone, app, L) {
+define([
+	'jquery', 'underscore', 'backbone', 'app',
+	'leaflet',
+	'locatecontrol'
+],
+function (
+	$, _, Backbone, app,
+	L,
+	locatecontrol
+) {
 	var Models = {};
 	var Collections = {};
 	var Views = {};
+
+	var Controls = {};
+
+	Controls.Menu = L.Control.extend({
+		options: {
+			position: 'topright'
+		},
+		onAdd: function (map) {
+			var container = L.DomUtil.create(
+				'div',
+				'leaflet-control-menu leaflet-bar'
+			);
+			new Views.MapMenu({ el: container }).render();
+			return container;
+		}
+	});
+
+	Controls.Filters = L.Control.extend({
+		options: {
+			position: 'topright'
+		},
+		onAdd: function (map) {
+			var container = L.DomUtil.create(
+				'div',
+				'leaflet-control-filters leaflet-bar'
+			);
+			new Views.MapFilters({ el: container }).render();
+			return container;
+		}
+	});
 
 	Models.Checkin = Backbone.Model.extend({
 		url: function () {
@@ -42,6 +80,18 @@ function ($, _, Backbone, app, L) {
 		}
 	});
 
+	Views.MapLocation = Backbone.View.extend({
+		template: 'checkins/location'
+	});
+
+	Views.MapFilters = Backbone.View.extend({
+		template: 'checkins/filters'
+	});
+
+	Views.MapMenu = Backbone.View.extend({
+		template: 'checkins/menu'
+	});
+
 	Views.Map = Backbone.View.extend({
 		template: 'checkins/map',
 		initialize: function (options) {
@@ -56,27 +106,28 @@ function ($, _, Backbone, app, L) {
 		beforeRender: function () {
 		},
 		afterRender: function () {
-			var that = this;
-			var tileserver = '//{s}.tiles.mapbox.com/v3/' +
-					'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png';
+			// Map
 			var map = this.map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 12);
-			L.tileLayer(tileserver, {
-				attribution: '&copy; CloudMade, OpenStreetMap'
+			L.tileLayer('//{s}.tiles.mapbox.com/v3/' +
+				'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png'
+			).addTo(map);
+			// Locate
+			var lc = L.control.locate({
+				follow: true
 			}).addTo(map);
-			map.on('drag', function () {
-				map.stopLocate();
+			map.on('startfollowing', function() {
+				map.on('dragstart', lc.stopFollowing);
+			}).on('stopfollowing', function() {
+				map.off('dragstart', lc.stopFollowing);
 			});
-			// map.on('move', _.throttle(function () {
-			// 	var location = map.getCenter();
-			// 	that.model
-			// 		.set(location)
-			// 		.fetch();
-			// 	that.collection
-			// 		.setLocation(location)
-			// 		.fetch();
-			// }, 1000));
-			// this.locateMe();
+			new Views.MapLocation({
+				el: lc.getContainer().querySelector('a')
+			}).render();
+			// Buttons
+			map.addControl(new Controls.Menu());
+			map.addControl(new Controls.Filters());
+			// Pins
 			this.collection.fetch();
 		},
 		cleanup: function () {

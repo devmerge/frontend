@@ -20,12 +20,32 @@ function ($, _, Backbone, app) {
 			}
 		},
 		serialize: function () {
-			console.log(this.model.toJSON());
 			return this.model.toJSON();
 		},
 		beforeRender: function () {
+			this.setViews({
+				'header': new Views.Cover({
+					model: this.model
+				})
+			});
 		},
 		afterRender: function () {
+		}
+	});
+
+	Views.Cover = Backbone.View.extend({
+		template: 'venues/cover',
+		serialize: function () {
+			return this.model.toJSON();
+		},
+		afterRender: function () {
+			var that = this;
+			$.get('https://graph.facebook.com/' + this.model.id + '?fields=cover')
+			.done(function (data) {
+				if (data && data.cover && data.cover.source) {
+					that.el.style.backgroundImage = 'url("' + data.cover.source + '")';
+				}
+			});
 		}
 	});
 

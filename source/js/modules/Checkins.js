@@ -182,7 +182,9 @@ function (
 			).addTo(map);
 			// Locate
 			var lc = L.control.locate({
-				follow: true
+				follow: true,
+				onLocationError: function () {},
+				onLocationOutsideMapBounds: function () {}
 			}).addTo(map);
 			map.on('startfollowing', function() {
 				map.on('dragstart', lc.stopFollowing);
@@ -210,6 +212,7 @@ function (
 			});
 		},
 		updateVenues: function () {
+			var that = this;
 			var venues = this.collection.toFeatureCollection();
 			if (this.venues) {
 				this.map.removeLayer(this.venues);
@@ -237,11 +240,7 @@ function (
 					title: feature.properties.name
 				});
 				marker.on('click', function (event) {
-					console.log(
-						feature.properties.active ?
-							'Merge going on today!' :
-							'No merging so far today'
-					);
+					that.trigger('venue', feature);
 				});
 				return marker;
 			};

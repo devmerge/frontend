@@ -19,12 +19,7 @@ function (
 	Views.Landing = Views.Base.extend({
 		template: 'layouts/landing',
 		events: {
-			'click .location': 'location',
-			'click .facebook': 'login',
-			'touchmove .button': 'preventDrag'
-		},
-		location: function (event) {
-			this.getView('.map').locateMe();
+			'click .facebook': 'login'
 		},
 		login: function (event) {
 			app.session.signIn({
@@ -44,9 +39,6 @@ function (
 					});
 				}
 			});
-		},
-		preventDrag: function (event) {
-			event.preventDefault();
 		}
 	});
 

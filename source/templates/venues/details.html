@@ -1,5 +1,40 @@
 <section class="venues details">
-	<div class="progress">
-		<span class="message">Loading...</span>
-	</div>
+	<article class="venue">
+		<header>
+			<p>Venue</p>
+			<h1>
+				<a href="https://www.facebook.com/{{id}}" target="_blank">
+					<img src="https://graph.facebook.com/{{id}}/picture" />
+					<span class="name">{{properties.name}}</span>
+				</a>
+			</h1>
+		</header>
+		<p>Recent merges</p>
+		<ol>
+			{{#each properties.checkins}}
+			<li>
+				<p>{{message}}</p>
+				<p>{{created_time}}</p>
+				<ul>
+					<li>
+						{{#with from}}
+						<a href="https://www.facebook.com/{{id}}" target="_blank">
+							<img src="https://graph.facebook.com/{{id}}/picture" />
+							<span class="name">{{name}}</span>
+						</a>
+						{{/with}}
+					</li>
+					{{#each with_tags.data}}
+					<li>
+						<a href="https://www.facebook.com/{{id}}" target="_blank">
+							<img src="https://graph.facebook.com/{{id}}/picture" />
+							<span class="name">{{name}}</span>
+						</a>
+					</li>
+					{{/each}}
+				</ul>
+			</li>
+			{{/each}}
+		</ol>
+	</article>
 </section>

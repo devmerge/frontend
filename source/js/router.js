@@ -29,7 +29,7 @@ define([
 						'No merging so far today'
 				);
 				var details = new Venues.Views.Details({
-					feature: feature,
+					model: new Venues.Models.Details(feature),
 					map: map
 				});
 				app.layout.setViews({

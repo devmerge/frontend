@@ -18,7 +18,7 @@ function (
 
 	Controls.Menu = L.Control.extend({
 		options: {
-			position: 'topright'
+			position: 'bottomleft'
 		},
 		onAdd: function (map) {
 			var container = L.DomUtil.create(
@@ -32,7 +32,7 @@ function (
 
 	Controls.Filters = L.Control.extend({
 		options: {
-			position: 'topright'
+			position: 'bottomleft'
 		},
 		onAdd: function (map) {
 			var container = L.DomUtil.create(
@@ -111,7 +111,9 @@ function (
 					geometry: point,
 					properties: {
 						name: place.name,
-						checkins: checkins,
+						checkins: checkins.map(function (model) {
+							return model.toJSON();
+						}),
 						active: _.any(checkins, isActive)
 					}
 				};
@@ -195,8 +197,8 @@ function (
 				el: lc.getContainer().querySelector('a')
 			}).render();
 			// Buttons
-			map.addControl(new Controls.Menu());
 			map.addControl(new Controls.Filters());
+			map.addControl(new Controls.Menu());
 			// Pins
 			this.collection.fetch();
 		},

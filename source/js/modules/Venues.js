@@ -4,6 +4,9 @@ function ($, _, Backbone, app) {
 	var Collections = {};
 	var Views = {};
 
+	Models.Details = Backbone.Model.extend({
+	});
+
 	Views.Details = Backbone.View.extend({
 		template: 'venues/details',
 		initialize: function (options) {
@@ -12,13 +15,17 @@ function ($, _, Backbone, app) {
 		cleanup: function () {
 		},
 		events: {
+			'click .progress': function (event) {
+				this.remove();
+			}
 		},
 		serialize: function () {
+			console.log(this.model.toJSON());
+			return this.model.toJSON();
 		},
 		beforeRender: function () {
 		},
 		afterRender: function () {
-			this.el.classList.add('loading');
 		}
 	});
 

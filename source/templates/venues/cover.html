@@ -1,6 +1,17 @@
 <h1 class="venues cover">
-	<a href="https://www.facebook.com/{{id}}" target="_blank">
-		<img src="https://graph.facebook.com/{{id}}/picture" />
-		<span class="name">{{properties.name}}</span>
-	</a>
+	{{#if cover.source}}
+	<div class="photo" style="background-image: url('{{cover.source}}')" />
+	{{/if}}
+	<div class="about">
+		<div class="icon">
+			<a href="https://www.facebook.com/{{id}}" target="_blank">
+				<img src="https://graph.facebook.com/{{id}}/picture?width=200&height=200" />
+			</a>
+		</div>
+		<div class="name">
+			<a href="https://www.facebook.com/{{id}}" target="_blank">
+				{{properties.name}}
+			</a>
+		</div>
+	</div>
 </h1>

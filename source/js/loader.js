@@ -11,7 +11,8 @@ require.config({
 		underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min',
 		leaflet: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.1/leaflet',
 		fastclick: '//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min',
-		locatecontrol: 'libs/L.Control.Locate'
+		locatecontrol: 'libs/L.Control.Locate',
+		hammer: '//cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.5/hammer.min'
 	},
 	shim: {
 		backbone: {
@@ -39,6 +40,9 @@ require.config({
 		fastclick: {
 			deps: ['jquery'],
 			exports: 'FastClick'
+		},
+		hammer: {
+			exports: 'Hammer'
 		}
 	}
 });

@@ -1,5 +1,11 @@
-define(['jquery', 'underscore', 'backbone', 'app'],
-function ($, _, Backbone, app) {
+define([
+	'jquery', 'underscore', 'backbone', 'app',
+	'hammer'
+],
+function (
+	$, _, Backbone, app,
+	Hammer
+) {
 	var Models = {};
 	var Collections = {};
 	var Views = {};
@@ -36,6 +42,10 @@ function ($, _, Backbone, app) {
 			});
 		},
 		afterRender: function () {
+			Hammer(this.el).on('swiperight', this.close);
+		},
+		close: function () {
+			this.remove();
 		}
 	});
 

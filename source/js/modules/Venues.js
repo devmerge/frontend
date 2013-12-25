@@ -27,9 +27,6 @@ function (
 		cleanup: function () {
 		},
 		events: {
-			'click .progress': function (event) {
-				this.remove();
-			}
 		},
 		serialize: function () {
 			return this.model.toJSON();
@@ -41,11 +38,22 @@ function (
 				})
 			});
 		},
+		appeared: false,
 		afterRender: function () {
-			Hammer(this.el).on('swiperight', this.close);
+			if (!this.appeared) {
+				this.appeared = true;
+				var effect = 'reveal';
+				$(this.el)
+					.addClass(effect)
+					.one('webkitAnimationEnd mozAnimationEnd' +
+						'oAnimationEnd animationEnd', function () {
+						$(this).removeClass(effect);
+					});
+				Hammer(this.el).on('swiperight', this.close);
+			}
 		},
 		close: function () {
-			this.remove();
+			app.layout.removeView('.details');
 		}
 	});
 

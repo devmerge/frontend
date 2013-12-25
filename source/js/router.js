@@ -23,19 +23,21 @@ define([
 				collection: checkins
 			})
 			.on('venue', function (feature) {
-				console.log(
-					feature.properties.active ?
-						'Merge going on today!' :
-						'No merging so far today'
-				);
-				var details = new Venues.Views.Details({
-					model: new Venues.Models.Details(feature),
-					map: map
-				});
-				app.layout.setViews({
-					'.details': details
-				});
-				details.render();
+				var details;
+				if (app.layout.getView('.details')) {
+					details = app.layout.getView('.details');
+					details.model = new Venues.Models.Details(feature);
+					details.render();
+				} else {
+					details = new Venues.Views.Details({
+						model: new Venues.Models.Details(feature),
+						map: map
+					});
+					app.layout.setViews({
+						'.details': details
+					});
+					details.render();
+				}
 			});
 
 			app.useLayout(Layouts.Views.Landing, {

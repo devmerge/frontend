@@ -15,3 +15,15 @@
 		height 100%
 		overflow auto
 		-webkit-overflow-scrolling touch
+
+	&.reveal
+		animation-duration 0.25s
+		animation-name reveal-venue
+		transform-origin center left
+
+@keyframes reveal-venue
+	0%
+		opacity 0.5
+		transform translateX(100px) scale(2)
+	100%
+		transform translateX(0) scale(1)

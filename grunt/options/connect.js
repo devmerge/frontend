@@ -2,7 +2,6 @@ module.exports = function (grunt) {
 	return {
 		development: {
 			options: {
-				hostname: '192.168.1.101',
 				base: '<%= source %>',
 				port: 9000
 			}

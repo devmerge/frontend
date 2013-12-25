@@ -1,7 +1,5 @@
 <h1 class="venues cover">
-	{{#if cover.source}}
-	<div class="photo" style="background-image: url('{{cover.source}}')" />
-	{{/if}}
+	<div class="photo" {{#if cover.source}}style="background-image: url('{{cover.source}}')"{{/if}} />
 	<div class="about">
 		<div class="icon">
 			<a href="https://www.facebook.com/{{id}}" target="_blank">

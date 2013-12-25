@@ -33,6 +33,10 @@ define([
 						model: new Venues.Models.Details(feature),
 						map: map
 					});
+					$(map.el).addClass('mute');
+					details.on('cleanup', function (event) {
+						$(map.el).removeClass('mute');
+					});
 					app.layout.setViews({
 						'.details': details
 					});

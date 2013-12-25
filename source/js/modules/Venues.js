@@ -27,6 +27,7 @@ function (
 		cleanup: function () {
 		},
 		events: {
+			'click .close': 'close'
 		},
 		serialize: function () {
 			return this.model.toJSON();
@@ -40,6 +41,7 @@ function (
 		},
 		appeared: false,
 		afterRender: function () {
+			var that = this;
 			if (!this.appeared) {
 				this.appeared = true;
 				var effect = 'reveal';
@@ -49,10 +51,13 @@ function (
 						'oAnimationEnd animationEnd', function () {
 						$(this).removeClass(effect);
 					});
-				Hammer(this.el).on('swiperight', this.close);
+				Hammer(this.el).on('swiperight', function () {
+					that.close();
+				});
 			}
 		},
 		close: function () {
+			this.trigger('cleanup');
 			app.layout.removeView('.details');
 		}
 	});

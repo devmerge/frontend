@@ -76,6 +76,7 @@ function (
 				.groupBy('localeDate')
 				.map(byDay)
 				.sortBy(byDate)
+				.reverse()
 				.value();
 			var context = {
 				days: days,

@@ -71,5 +71,8 @@
 		.leaflet-bottom
 			transform scale(1.5)
 
-		&.mute .leaflet-control
-			opacity 0
+		&.mute
+			transition -webkit-filter 0.25s linear 0s
+			-webkit-filter blur(10px) grayscale(75%)
+			.leaflet-control
+				opacity 0

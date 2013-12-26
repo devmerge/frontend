@@ -6,7 +6,7 @@
 	height 100%
 	width 400px
 	max-width 100%
-	background-color rgba(white, 0.5)
+	background-color rgba(white, 0.9)
 	overflow auto
 	-webkit-overflow-scrolling touch
 	z-index 10000
@@ -33,6 +33,48 @@
 				fill #f4f4f4
 			&:active svg
 				stroke orange
+		> ol
+			list-style-type none
+			padding 0
+			margin 0
+			> li
+				margin 0
+				> h3
+					text-align center
+					margin 0
+					padding 10px
+					font-size 14px
+					font-weight bold
+				> ol
+					list-style-type none
+					padding 0
+					margin 0
+					> li
+						> a
+							display flex
+							width 100%
+							box-sizing border-box
+							text-decoration none
+							justify-content flex-start
+							align-items center
+							padding 5px 10px
+							> img
+								flex none
+								width 40px
+								height 40px
+								background-color white
+							> .name
+								flex auto
+								color black
+								font-size 14px
+								font-weight bold
+								padding 0 10px
+							> .time
+								text-align right
+								flex none
+								width 80px
+								color black
+								font-size 14px
 
 	&.reveal
 		animation-duration 0.25s
@@ -45,3 +87,11 @@
 		transform translateX(100px)
 	100%
 		transform translateX(0)
+
+@media (max-width: 768px)
+	#app .venues.details
+		background-color transparent
+		width 100%
+		.venue
+			ol
+				min-height 100%

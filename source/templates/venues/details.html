@@ -6,12 +6,11 @@
 			</svg>
 		</a>
 		<header></header>
-		<p>Recent merges</p>
 		<ol>
 			{{#each days}}
 			<li>
-				<p>{{localeDate}}</p>
-				<ul>
+				<h3>{{localeDate}}</h3>
+				<ol>
 					{{#each participants}}
 					<li>
 						<a href="https://www.facebook.com/{{id}}" target="_blank">
@@ -21,7 +20,7 @@
 						</a>
 					</li>
 					{{/each}}
-				</ul>
+				</ol>
 			</li>
 			{{/each}}
 		</ol>

@@ -107,29 +107,28 @@ function (
 						'oAnimationEnd animationEnd', function () {
 						$(this).removeClass(effect);
 					});
-				var setOffset = function (offset) {
+				var setOffset = function (x, y) {
 					that.$el.css({
-						transform: 'translate(' +
-							offset + 'px' +
-						')'
+						transform:
+							'translateX(' + x + 'px) ' +
+							'translateY(' + y + 'px)'
 					});
 				};
-				hammer(this.el, {
-					// drag_lock_to_axis: true,
-					// drag_block_vertical: true
-				// }).on('swiperight', function (event) {
-				// 	that.close();
-				}).on('dragstart', function (event) {
+				hammer(this.el)
+				.on('dragstart', function (event) {
 					that.$el.addClass('dragging');
-				}).on('release', function (event) {
+				})
+				.on('release', function (event) {
 					if (Math.abs(event.gesture.deltaX) > 100) {
 						that.close();
 					} else {
 						that.$el.removeClass('dragging');
-						setOffset(0);
+						setOffset(0, 0);
 					}
-				}).on('dragright', function (event) {
-					setOffset(event.gesture.deltaX);
+				})
+				.on('dragright', function (event) {
+					var top = that.$el.find('.venue').scrollTop();
+					setOffset(event.gesture.deltaX, top);
 				});
 			}
 		},

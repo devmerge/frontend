@@ -36,22 +36,24 @@ function (
 						'translateY(' + y + 'px)'
 				});
 			};
-			hammer(this.el)
-			.on('dragstart', function (event) {
-				that.$el.addClass('dragging');
-			})
-			.on('release', function (event) {
-				if (Math.abs(event.gesture.deltaX) > 100) {
-					that.close();
-				} else {
-					that.$el.removeClass('dragging');
-					setOffset(0, 0);
-				}
-			})
-			.on('dragright', function (event) {
-				var top = that.$el.find('article').scrollTop();
-				setOffset(event.gesture.deltaX, top);
-			});
+			if ('ontouchstart' in document.documentElement) {
+				hammer(this.el)
+					.on('dragstart', function (event) {
+						that.$el.addClass('dragging');
+					})
+					.on('release', function (event) {
+						if (Math.abs(event.gesture.deltaX) > 100) {
+							that.close();
+						} else {
+							that.$el.removeClass('dragging');
+							setOffset(0, 0);
+						}
+					})
+					.on('dragright', function (event) {
+						var top = that.$el.find('article').scrollTop();
+						setOffset(event.gesture.deltaX, top);
+					});
+			}
 		},
 		close: function () {
 			this.trigger('cleanup');

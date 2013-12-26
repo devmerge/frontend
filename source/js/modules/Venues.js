@@ -30,7 +30,62 @@ function (
 			'click .close': 'close'
 		},
 		serialize: function () {
-			return this.model.toJSON();
+			var getParticipants = function (checkin) {
+				var from = checkin.from ?
+					checkin.from : [];
+				var with_tags = checkin.with_tags && checkin.with_tags.data ?
+					checkin.with_tags.data : [];
+				var participants = [].concat(from, with_tags);
+
+				var timestamp = Date.parse(checkin.created_time);
+				var date = new Date(timestamp);
+				var localeDate = date.toLocaleDateString();
+				var localeTime = date.toLocaleTimeString(
+					undefined, {
+						hour: '2-digit',
+						minute: '2-digit'
+					}
+				);
+				return _.map(participants, function (participant) {
+					return _.extend(participant, {
+						timestamp: timestamp,
+						localeTime: localeTime,
+						localeDate: localeDate
+					});
+				});
+			};
+			var byName = function (participant) {
+				return participant.id;
+			};
+			var byDay = function (participants, localeDate) {
+				return {
+					localeDate: localeDate,
+					participants: _.chain(participants)
+						.unique(byName)
+						.sortBy('timestamp')
+						.reverse()
+						.value()
+				};
+			};
+			var byDate = function (day) {
+				return day.participants[0].timestamp;
+			};
+			var days = _.chain(this.model.get('properties').checkins)
+				.map(getParticipants)
+				.flatten()
+				.groupBy('localeDate')
+				.map(byDay)
+				.sortBy(byDate)
+				.value();
+			var context = {
+				days: days,
+				venue: {
+					id: this.model.id,
+					name: this.model.get('properties').name,
+					active: this.model.get('properties').active
+				}
+			};
+			return context;
 		},
 		beforeRender: function () {
 			this.setViews({

@@ -64,7 +64,7 @@ function (
 		initialize: function (models, options) {
 			this.options = options || {};
 		},
-		toFeatureCollection: function () {
+		toFeatures: function () {
 			var getPlace = function (checkin) {
 				return checkin.get('place').id;
 			};
@@ -173,7 +173,6 @@ function (
 		beforeRender: function () {
 		},
 		afterRender: function () {
-			// Map
 			var map = this.map = new L.Map(this.el);
 			map.setView([1.35, 103.8], 12);
 			L.tileLayer(
@@ -182,7 +181,7 @@ function (
 					'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
 				{ detectRetina: true }
 			).addTo(map);
-			// Locate
+
 			var lc = L.control.locate({
 				follow: true,
 				onLocationError: function () {},
@@ -196,29 +195,14 @@ function (
 			new Views.MapLocation({
 				el: lc.getContainer().querySelector('a')
 			}).render();
-			// Buttons
+
 			map.addControl(new Controls.Filters());
 			map.addControl(new Controls.Menu());
-			// Pins
+
 			this.collection.fetch();
-		},
-		cleanup: function () {
-			this.map.stopLocate();
-		},
-		locateMe: function (event) {
-			this.map.stopLocate();
-			this.map.locate({
-				enableHighAccuracy: true,
-				setView: true,
-				watch: true
-			});
 		},
 		updateVenues: function () {
 			var that = this;
-			var venues = this.collection.toFeatureCollection();
-			if (this.venues) {
-				this.map.removeLayer(this.venues);
-			}
 			var FacebookIcon = L.Icon.extend({
 				options: {
 					// shadowUrl: 'leaf-shadow.png',
@@ -246,7 +230,11 @@ function (
 				});
 				return marker;
 			};
-			this.venues = L.geoJson(venues, {
+			var features = this.collection.toFeatures();
+			if (this.venues) {
+				this.map.removeLayer(this.venues);
+			}
+			this.venues = L.geoJson(features, {
 				pointToLayer: drawFacebookMarker
 			}).addTo(this.map);
 			this.map.fitBounds(this.venues.getBounds(), {

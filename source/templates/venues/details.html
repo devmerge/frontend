@@ -8,24 +8,16 @@
 		<header></header>
 		<p>Recent merges</p>
 		<ol>
-			{{#each properties.checkins}}
+			{{#each days}}
 			<li>
-				<p>{{message}}</p>
-				<p>{{created_time}}</p>
+				<p>{{localeDate}}</p>
 				<ul>
-					<li>
-						{{#with from}}
-						<a href="https://www.facebook.com/{{id}}" target="_blank">
-							<img src="https://graph.facebook.com/{{id}}/picture" />
-							<span class="name">{{name}}</span>
-						</a>
-						{{/with}}
-					</li>
-					{{#each with_tags.data}}
+					{{#each participants}}
 					<li>
 						<a href="https://www.facebook.com/{{id}}" target="_blank">
 							<img src="https://graph.facebook.com/{{id}}/picture" />
 							<span class="name">{{name}}</span>
+							<span class="time">{{localeTime}}</span>
 						</a>
 					</li>
 					{{/each}}

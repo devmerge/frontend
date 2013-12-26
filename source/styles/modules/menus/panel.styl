@@ -1,0 +1,54 @@
+#app .menus.panel
+	position absolute
+	top 0
+	right 0
+	bottom 0
+	height 100%
+	width 400px
+	max-width 100%
+	background-color rgba(white, 0.9)
+	overflow auto
+	-webkit-overflow-scrolling touch
+	z-index 10000
+	&:not(.dragging)
+		transition transform 0.25s ease-out 0s
+	&.reveal
+		animation-duration 0.25s
+		animation-name reveal-panel
+		transform-origin center left
+	article
+		height 100%
+		overflow auto
+		-webkit-overflow-scrolling touch
+		position relative
+		.close
+			display inline-block
+			width 35px
+			height 35px
+			position absolute
+			right 0
+			top 0
+			z-index 20000
+			svg
+				stroke black
+				stroke-width 20px
+				fill white
+			&:hover svg
+				fill #f4f4f4
+			&:active svg
+				stroke orange
+
+@keyframes reveal-panel
+	0%
+		opacity 0.5
+		transform translateX(100px)
+	100%
+		transform translateX(0)
+
+@media (max-width: 768px)
+	#app .menus.panel
+		background-color transparent
+		width 100%
+		> .article
+			> .content
+				min-height 100%

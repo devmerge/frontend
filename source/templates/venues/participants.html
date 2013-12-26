@@ -1,0 +1,18 @@
+<ol class="venues participants">
+	{{#each days}}
+	<li>
+		<h3>{{localeDate}}</h3>
+		<ol>
+			{{#each participants}}
+			<li>
+				<a href="https://www.facebook.com/{{id}}" target="_blank">
+					<img src="https://graph.facebook.com/{{id}}/picture" />
+					<span class="name">{{name}}</span>
+					<span class="time">{{localeTime}}</span>
+				</a>
+			</li>
+			{{/each}}
+		</ol>
+	</li>
+	{{/each}}
+</ol>

@@ -23,25 +23,10 @@ define([
 				collection: checkins
 			})
 			.on('venue', function (feature) {
-				var details;
-				if (app.layout.getView('.details')) {
-					details = app.layout.getView('.details');
-					details.model = new Venues.Models.Details(feature);
-					details.render();
-				} else {
-					details = new Venues.Views.Details({
-						model: new Venues.Models.Details(feature),
-						map: map
-					});
-					$(map.el).addClass('mute');
-					details.on('cleanup', function (event) {
-						$(map.el).removeClass('mute');
-					});
-					app.layout.setViews({
-						'.details': details
-					});
-					details.render();
-				}
+				var menu = new Venues.Views.Details({
+					model: new Venues.Models.Details(feature)
+				});
+				app.layout.panel(menu);
 			});
 
 			app.useLayout(Layouts.Views.Landing, {

@@ -2,13 +2,15 @@ define([
 	'jquery', 'underscore', 'backbone', 'app',
 	'leaflet',
 	'locatecontrol',
-	'libs/iso8601'
+	'libs/iso8601',
+	'modules/Menus'
 ],
 function (
 	$, _, Backbone, app,
 	L,
 	locatecontrol,
-	iso8601
+	iso8601,
+	Menus
 ) {
 	var Models = {};
 	var Collections = {};
@@ -156,7 +158,15 @@ function (
 	});
 
 	Views.MapMenu = Backbone.View.extend({
-		template: 'checkins/menu'
+		template: 'checkins/menu',
+		events: {
+			'click a': 'menu'
+		},
+		menu: function (event) {
+			var menu = new Menus.Views.Settings({
+			});
+			app.layout.panel(menu);
+		}
 	});
 
 	Views.Map = Backbone.View.extend({

@@ -1,10 +1,8 @@
 define([
-	'jquery', 'underscore', 'backbone', 'app',
-	'modules/Users'
+	'jquery', 'underscore', 'backbone', 'app'
 ],
 function (
-	$, _, Backbone, app,
-	Users
+	$, _, Backbone, app
 ) {
 	var Models = {};
 	var Collections = {};
@@ -18,27 +16,16 @@ function (
 
 	Views.Landing = Views.Base.extend({
 		template: 'layouts/landing',
-		events: {
-			'click .facebook': 'login'
-		},
-		login: function (event) {
-			app.session.signIn({
-				scope: 'user_checkins, read_stream',
-				success: function () {
-					var facebook = new Users.Models.Facebook();
-					var credentials = app.session.pick(
-						'accessToken', 'expiresIn', 'userID', 'signedRequest'
-					);
-					facebook.save(credentials, {
-						success: function () {
-							console.trace('saved!');
-						},
-						error: function () {
-							console.trace('oops?', arguments);
-						}
-					});
-				}
+		panel: function (menu) {
+			var map = this.getView('.map');
+			$(map.el).addClass('mute');
+			menu.on('cleanup', function (event) {
+				$(map.el).removeClass('mute');
 			});
+			this.setViews({
+				'.panel': menu
+			});
+			menu.render();
 		}
 	});
 

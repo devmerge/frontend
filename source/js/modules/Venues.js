@@ -1,10 +1,10 @@
 define([
 	'jquery', 'underscore', 'backbone', 'app',
-	'hammer'
+	'modules/Menus'
 ],
 function (
 	$, _, Backbone, app,
-	hammer
+	Menus
 ) {
 	var Models = {};
 	var Collections = {};
@@ -19,15 +19,24 @@ function (
 		}
 	});
 
-	Views.Details = Backbone.View.extend({
-		template: 'venues/details',
+	Views.Details = Menus.Views.Panel.extend({
+		beforeRender: function () {
+			this.setViews({
+				'header': new Views.Cover({
+					model: this.model
+				}),
+				'.content': new Views.Participants({
+					model: this.model
+				})
+			});
+		}
+	});
+
+	Views.Participants = Backbone.View.extend({
+		template: 'venues/participants',
 		initialize: function (options) {
 			this.options = options;
-		},
-		cleanup: function () {
-		},
-		events: {
-			'click .close': 'close'
+			this.listenTo(this.model, 'change', this.render);
 		},
 		serialize: function () {
 			var getParticipants = function (checkin) {
@@ -70,7 +79,9 @@ function (
 			var byDate = function (day) {
 				return day.participants[0].timestamp;
 			};
-			var days = _.chain(this.model.get('properties').checkins)
+			var properties = this.model.has('properties') ?
+				this.model.get('properties') : {};
+			var days = _.chain(properties.checkins)
 				.map(getParticipants)
 				.flatten()
 				.groupBy('localeDate')
@@ -82,59 +93,11 @@ function (
 				days: days,
 				venue: {
 					id: this.model.id,
-					name: this.model.get('properties').name,
-					active: this.model.get('properties').active
+					name: properties.name,
+					active: properties.active
 				}
 			};
 			return context;
-		},
-		beforeRender: function () {
-			this.setViews({
-				'header': new Views.Cover({
-					model: this.model
-				})
-			});
-		},
-		appeared: false,
-		afterRender: function () {
-			var that = this;
-			if (!this.appeared) {
-				this.appeared = true;
-				var effect = 'reveal';
-				$(this.el)
-					.addClass(effect)
-					.one('webkitAnimationEnd mozAnimationEnd' +
-						'oAnimationEnd animationEnd', function () {
-						$(this).removeClass(effect);
-					});
-				var setOffset = function (x, y) {
-					that.$el.css({
-						transform:
-							'translateX(' + x + 'px) ' +
-							'translateY(' + y + 'px)'
-					});
-				};
-				hammer(this.el)
-				.on('dragstart', function (event) {
-					that.$el.addClass('dragging');
-				})
-				.on('release', function (event) {
-					if (Math.abs(event.gesture.deltaX) > 100) {
-						that.close();
-					} else {
-						that.$el.removeClass('dragging');
-						setOffset(0, 0);
-					}
-				})
-				.on('dragright', function (event) {
-					var top = that.$el.find('.venue').scrollTop();
-					setOffset(event.gesture.deltaX, top);
-				});
-			}
-		},
-		close: function () {
-			this.trigger('cleanup');
-			app.layout.removeView('.details');
 		}
 	});
 

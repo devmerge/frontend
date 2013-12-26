@@ -188,14 +188,18 @@ function (
 		},
 		afterRender: function () {
 			var map = this.map = new L.Map(this.el, {
-				zoomControl: false
+				zoomControl: false,
+				attributionControl: false
 			});
 			map.setView([1.35, 103.8], 12);
 			L.tileLayer(
 				// 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 				'//{s}.tiles.mapbox.com/v3/' +
 					'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
-				{ detectRetina: true }
+				{
+					detectRetina: true,
+					noWrap: true
+				}
 			).addTo(map);
 
 			map.addControl(new Controls.Settings({

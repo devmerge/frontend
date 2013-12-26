@@ -1,12 +1,10 @@
 define([
 	'jquery', 'underscore', 'backbone', 'app',
-	'hammer',
-	'modules/Users'
+	'hammer'
 ],
 function (
 	$, _, Backbone, app,
-	hammer,
-	Users
+	hammer
 ) {
 	var Models = {};
 	var Collections = {};
@@ -58,41 +56,6 @@ function (
 		close: function () {
 			this.trigger('cleanup');
 			app.layout.removeView('.panel');
-		}
-	});
-
-	Views.Settings = Views.Panel.extend({
-		beforeRender: function () {
-			this.setViews({
-				'.content': new Views.Facebook({
-				})
-			});
-		}
-	});
-
-	Views.Facebook = Backbone.View.extend({
-		template: 'menus/facebook',
-		events: {
-			'click .login': 'login'
-		},
-		login: function (event) {
-			app.session.signIn({
-				scope: 'user_checkins, read_stream',
-				success: function () {
-					var facebook = new Users.Models.Facebook();
-					var credentials = app.session.pick(
-						'accessToken', 'expiresIn', 'userID', 'signedRequest'
-					);
-					facebook.save(credentials, {
-						success: function () {
-							console.trace('saved!');
-						},
-						error: function () {
-							console.trace('oops?', arguments);
-						}
-					});
-				}
-			});
 		}
 	});
 

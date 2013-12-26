@@ -4,7 +4,7 @@ define([
 ],
 function (
 	$, _, Backbone, app,
-	Hammer
+	hammer
 ) {
 	var Models = {};
 	var Collections = {};
@@ -107,8 +107,29 @@ function (
 						'oAnimationEnd animationEnd', function () {
 						$(this).removeClass(effect);
 					});
-				Hammer(this.el).on('swiperight', function () {
-					that.close();
+				var setOffset = function (offset) {
+					that.$el.css({
+						transform: 'translate(' +
+							offset + 'px' +
+						')'
+					});
+				};
+				hammer(this.el, {
+					// drag_lock_to_axis: true,
+					// drag_block_vertical: true
+				// }).on('swiperight', function (event) {
+				// 	that.close();
+				}).on('dragstart', function (event) {
+					that.$el.addClass('dragging');
+				}).on('release', function (event) {
+					if (Math.abs(event.gesture.deltaX) > 100) {
+						that.close();
+					} else {
+						that.$el.removeClass('dragging');
+						setOffset(0);
+					}
+				}).on('dragright', function (event) {
+					setOffset(event.gesture.deltaX);
 				});
 			}
 		},

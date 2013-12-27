@@ -17,6 +17,17 @@
 			margin 0 8px
 		.example
 			font-style italic
+	.cta
+		text-align center
+		&.authenticated
+			display none
+		.login
+			background-color #3B5998
+			color white
+			margin 20px 0
+			padding 20px 30px
+			font-size 20px
+			font-weight bold
 	h2
 		font-size 14px
 	p
@@ -25,17 +36,17 @@
 		padding 0 0 0 20px
 	li
 		font-size 14px
+		.done
+			display none
+		&.authenticated
+			.pending
+				opacity 0.5
+				text-decoration line-through
+			.done
+				display inline
+				color green
 	code
 		padding 0 2px
 		border-radius 2px
 		border 1px solid silver
 		background-color beige
-	.cta
-		text-align center
-		.login
-			background-color #3B5998
-			color white
-			margin 20px 0
-			padding 20px 30px
-			font-size 20px
-			font-weight bold

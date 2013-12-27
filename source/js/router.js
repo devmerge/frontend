@@ -1,13 +1,19 @@
 define([
 	'jquery', 'underscore', 'backbone', 'app',
+	'facebook',
 	'modules/Checkins',
 	'modules/Venues',
-	'modules/Layouts'
+	'modules/Layouts',
+	'modules/Settings',
+	'modules/Users'
 ], function (
 	$, _, Backbone, app,
+	Facebook,
 	Checkins,
 	Venues,
-	Layouts
+	Layouts,
+	Settings,
+	Users
 ) {
 	return Backbone.Router.extend({
 
@@ -33,6 +39,21 @@ define([
 			}).setViews({
 				'.map': map
 			}).render();
+
+			app.session.getAuthStatus({
+				success: function () {
+					var facebook = new Users.Models.Facebook();
+					var credentials = app.session.pick(
+						'accessToken', 'userID'
+					);
+					facebook.save(credentials);
+				},
+				error: function () {
+					var menu = new Settings.Views.Menu({
+					});
+					app.layout.panel(menu);
+				}
+			});
 		},
 
 		404: function () {

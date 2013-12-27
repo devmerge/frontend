@@ -17,20 +17,25 @@ function (
 		events: {
 			'click .login': 'login'
 		},
+		serialize: function () {
+			return {
+				authenticated:
+					app.session.has('accessToken') &&
+					app.session.has('userID')
+			};
+		},
 		login: function (event) {
+			var that = this;
 			app.session.signIn({
 				scope: 'user_checkins, read_stream',
 				success: function () {
 					var facebook = new Users.Models.Facebook();
 					var credentials = app.session.pick(
-						'accessToken', 'expiresIn', 'userID', 'signedRequest'
+						'accessToken', 'userID'
 					);
 					facebook.save(credentials, {
 						success: function () {
-							console.trace('saved!');
-						},
-						error: function () {
-							console.trace('oops?', arguments);
+							that.render();
 						}
 					});
 				}

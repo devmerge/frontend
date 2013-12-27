@@ -32,8 +32,11 @@ function (_, FB, Session) {
 			options = options || {};
 			FB.getLoginStatus(_.bind(function (response) {
 				if (response.status === 'connected') {
+					this.save(response.authResponse);
 					if (_.isFunction(options.success)) { options.success(); }
 				} else {
+					this.destroy();
+					this.clear();
 					if (_.isFunction(options.error)) { options.error(); }
 				}
 			}, this));

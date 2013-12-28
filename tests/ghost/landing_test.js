@@ -25,8 +25,8 @@ casper.waitForSelector('#app > *.layout:not(.loading)');
 
 casper.then(function () {
 	this.test.assertExists(
-		'header',
-		'Check if it has a header element'
+		'.leaflet-container',
+		'Check if Leaflet is loading'
 	);
 });
 

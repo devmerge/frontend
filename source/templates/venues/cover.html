@@ -6,10 +6,16 @@
 				<img src="https://graph.facebook.com/{{id}}/picture?width=200&height=200" />
 			</a>
 		</div>
-		<div class="name">
-			<a href="https://www.facebook.com/{{id}}" target="_blank">
-				{{properties.name}}
-			</a>
+		<div class="place">
+			<a class="name" href="https://www.facebook.com/{{id}}" target="_blank">{{name}}</a>
+			{{#if location}}
+			<div class="address">
+				{{#if location.street}}<div class="street">{{location.street}}</div>{{/if}}
+				{{#if location.city}}<div class="city">{{location.city}}</div>{{/if}}
+				{{#if location.country}}<div class="country">{{location.country}}</div>{{/if}}
+				{{#if location.zip}}<div class="zip">{{location.zip}}</div>{{/if}}
+			</div>
+			{{/if}}
 		</div>
 	</div>
 </h1>

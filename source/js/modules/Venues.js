@@ -23,7 +23,10 @@ function (
 		beforeRender: function () {
 			this.setViews({
 				'header': new Views.Cover({
-					model: this.model
+					model: new Models.Cover(_.extend(
+						this.model.pick('id'),
+						this.model.get('properties').checkins[0].place
+					))
 				}),
 				'.content': new Views.Participants({
 					model: this.model
@@ -103,19 +106,13 @@ function (
 
 	Views.Cover = Backbone.View.extend({
 		template: 'venues/cover',
-		cover: null,
 		initialize: function (options) {
 			this.options = options;
-			this.cover = new Models.Cover({id: this.model.id});
 			this.listenTo(this.model, 'change', this.render);
-			this.listenTo(this.cover, 'change', this.render);
-			this.cover.fetch();
+			this.model.fetch();
 		},
 		serialize: function () {
-			return _.extend(
-				this.model.toJSON(),
-				this.cover.toJSON()
-			);
+			return this.model.toJSON();
 		}
 	});
 

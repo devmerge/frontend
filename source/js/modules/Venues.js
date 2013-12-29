@@ -112,7 +112,18 @@ function (
 			this.model.fetch();
 		},
 		serialize: function () {
-			return this.model.toJSON();
+			var directions = _.chain(this.model.get('location'))
+				.pick('street', 'city', 'country', 'zip')
+				.compact()
+				.join(', ')
+				.value();
+			return _.extend(this.model.toJSON(), {
+				directions: {
+					label: directions,
+					query: encodeURIComponent(directions)
+						.replace(/%20/g, '+')
+				}
+			});
 		}
 	});
 

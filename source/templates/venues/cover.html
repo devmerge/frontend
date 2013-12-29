@@ -8,13 +8,9 @@
 		</div>
 		<div class="place">
 			<a class="name" href="https://www.facebook.com/{{id}}" target="_blank">{{name}}</a>
-			{{#if location}}
-			<div class="address">
-				{{#if location.street}}<div class="street">{{location.street}}</div>{{/if}}
-				{{#if location.city}}<div class="city">{{location.city}}</div>{{/if}}
-				{{#if location.country}}<div class="country">{{location.country}}</div>{{/if}}
-				{{#if location.zip}}<div class="zip">{{location.zip}}</div>{{/if}}
-			</div>
+			{{#if directions.label}}
+			<div class="address">{{directions.label}}</div>
+			<a class="directions" href="http://maps.apple.com/?daddr={{directions.query}}" target="_blank">Get Directions</a>
 			{{/if}}
 		</div>
 	</div>

@@ -25,20 +25,23 @@
 		z-index 1
 		.icon
 			flex none
-			width 140px
+			width 25%
+			min-width 80px
+			max-width 140px
 			display flex
 			justify-content center
 			align-items center
-			a
+			font-size 0
+			padding 10px 0 10px 10px
+			.picture
 				background-color white
-				padding 5px 0 0 5px
-				height 112px
-				width 112px
 				display inline-block
 				img
-					height 102px
-					width 102px
+					box-sizing content-box
+					width calc(100% \- 10px)
+					max-width 100px
 					border 1px solid silver
+					margin 5px
 		.place
 			flex auto
 			margin 10px

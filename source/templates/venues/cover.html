@@ -2,15 +2,16 @@
 	<div class="photo" {{#if cover.source}}style="background-image: url('{{cover.source}}')"{{/if}} />
 	<div class="about">
 		<div class="icon">
-			<a href="https://www.facebook.com/{{id}}" target="_blank">
+			<span class="picture">
 				<img src="https://graph.facebook.com/{{id}}/picture?width=200&height=200" />
-			</a>
+			</span>
 		</div>
 		<div class="place">
-			<a class="name" href="https://www.facebook.com/{{id}}" target="_blank">{{name}}</a>
+			<div class="name">{{name}}</div>
 			{{#if directions.label}}
 			<div class="address">{{directions.label}}</div>
 			<a class="directions" href="http://maps.apple.com/?daddr={{directions.query}}" target="_blank">Get Directions</a>
+			<a class="directions" href="https://www.facebook.com/{{id}}" target="_blank">View on Facebook</a>
 			{{/if}}
 		</div>
 	</div>

@@ -10,9 +10,17 @@
 			<div class="name">{{name}}</div>
 			{{#if directions.label}}
 			<div class="address">{{directions.label}}</div>
-			<a class="directions" href="http://maps.apple.com/?daddr={{directions.query}}" target="_blank">Get Directions</a>
-			<a class="directions" href="https://www.facebook.com/{{id}}" target="_blank">View on Facebook</a>
 			{{/if}}
+			<div class="buttons">
+				{{#if directions.label}}
+				<a href="http://maps.apple.com/?daddr={{directions.query}}" target="_blank">
+					Get Directions
+				</a>
+				{{/if}}
+				<a href="https://www.facebook.com/{{id}}" target="_blank">
+					View on Facebook
+				</a>
+			</div>
 		</div>
 	</div>
 </h1>

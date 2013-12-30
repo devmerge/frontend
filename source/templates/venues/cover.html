@@ -1,26 +1,40 @@
-<h1 class="venues cover">
-	<div class="photo" {{#if cover.source}}style="background-image: url('{{cover.source}}')"{{/if}} />
-	<div class="about">
-		<div class="icon">
-			<span class="picture">
-				<img src="https://graph.facebook.com/{{id}}/picture?width=200&height=200" />
-			</span>
-		</div>
-		<div class="place">
-			<div class="name">{{name}}</div>
-			{{#if directions.label}}
-			<div class="address">{{directions.label}}</div>
-			{{/if}}
-			<div class="buttons">
+<div class="venues cover">
+	<header>
+		<div class="photo" {{#if cover.source}}style="background-image: url('{{cover.source}}')"{{/if}} />
+		<div class="about">
+			<div class="icon">
+				<span class="picture">
+					<img src="https://graph.facebook.com/{{id}}/picture?width=200&height=200" />
+				</span>
+			</div>
+			<div class="place">
+				<div class="name">{{name}}</div>
 				{{#if directions.label}}
-				<a href="http://maps.apple.com/?daddr={{directions.query}}" target="_blank">
-					Get Directions
-				</a>
+				<div class="address">{{directions.label}}</div>
 				{{/if}}
-				<a href="https://www.facebook.com/{{id}}" target="_blank">
-					View on Facebook
-				</a>
+				<div class="buttons">
+					{{#if directions.label}}
+					<a href="http://maps.apple.com/?daddr={{directions.query}}" target="_blank">
+						Get Directions
+					</a>
+					{{/if}}
+					<a href="https://www.facebook.com/{{id}}" target="_blank">
+						View on Facebook
+					</a>
+				</div>
 			</div>
 		</div>
+	</header>
+	<div class="checkin">
+		<div class="hint">
+			<svg class="arrow" width="512" height="512" viewBox="0 0 512 512">
+				<path d="m302 306c-72 0-128 8-170 23c-42 16-77 49-106 101c1-7 3-16 6-27c3-11 12-31 26-60c14-29 30-54 49-76c19-22 45-42 80-60c34-18 73-27 115-27c0 0 0-98 0-98c0 0 184 165 184 165c0 0-184 171-184 171c0 0 0-112 0-112"></path>
+			</svg>
+			<span class="captainobvious">Big button!!!</span>
+		</div>
+		<button>
+			<span class="notthere">Check in!</span>
+			<span class="checkedin">Checked in</span>
+		</button>
 	</div>
-</h1>
+</div>

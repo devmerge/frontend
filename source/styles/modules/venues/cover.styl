@@ -1,69 +1,96 @@
 #app .venues.cover
-	position relative
-	height 140px
-	margin 0
-	overflow hidden
-	a
-		text-decoration none
-	.photo
-		position absolute
-		top 0
-		right 0
-		bottom 0
-		left 0
-		background-size cover
-		background-repeat no-repeat
-		background-position center
-		background-color silver
-		z-index 0
-	.about
-		background-image linear-gradient(left, black, transparent)
-		display flex
-		height 100%
-		width 100%
+	header
 		position relative
-		z-index 1
-		.icon
-			flex none
-			width 25%
-			min-width 80px
-			max-width 140px
+		height 140px
+		margin 0
+		overflow hidden
+		a
+			text-decoration none
+		.photo
+			position absolute
+			top 0
+			right 0
+			bottom 0
+			left 0
+			background-size cover
+			background-repeat no-repeat
+			background-position center
+			background-color silver
+			z-index 0
+		.about
+			background-image linear-gradient(left, black, transparent)
 			display flex
-			justify-content center
-			align-items center
-			font-size 0
-			padding 10px 0 10px 10px
-			.picture
-				background-color white
-				display inline-block
-				img
-					width calc(100% \- 10px)
-					max-width 102px
-					border 1px solid silver
-					margin 5px
-		.place
-			flex auto
-			margin 10px
-			display flex
-			flex-direction column
-			justify-content center
-			align-items flex-start
-			color white
-			text-shadow 1px 1px 2px rgba(0, 0, 0, 1)
-			.name
-				font-size 16px
-				color white
-				font-weight bold
-			.address
-				font-size 12px
-				font-weight normal
-			.buttons
+			height 100%
+			width 100%
+			position relative
+			z-index 1
+			.icon
+				flex none
+				width 25%
+				min-width 80px
+				max-width 140px
+				display flex
+				justify-content center
+				align-items center
 				font-size 0
-				margin-top 4px
-				a
+				padding 10px 0 10px 10px
+				.picture
+					background-color white
 					display inline-block
+					img
+						width calc(100% \- 10px)
+						max-width 102px
+						border 1px solid silver
+						margin 5px
+			.place
+				flex auto
+				margin 10px
+				display flex
+				flex-direction column
+				justify-content center
+				align-items flex-start
+				color white
+				text-shadow 1px 1px 2px rgba(0, 0, 0, 1)
+				.name
+					font-size 16px
 					color white
-					font-size 10px
-					border 1px solid white
-					padding 2px 4px
-					margin 0 4px 0 0
+					font-weight bold
+				.address
+					font-size 12px
+					font-weight normal
+				.buttons
+					font-size 0
+					margin-top 4px
+					a
+						display inline-block
+						color white
+						font-size 10px
+						border 1px solid white
+						padding 2px 4px
+						margin 0 4px 0 0
+	.checkin
+		padding 5px
+		text-align center
+		.hint
+			font-size 10px
+			text-align right
+			padding 0 calc(10% \- 20px) 5px 0
+			.arrow
+				transform rotate(90deg) scaleY(-1)
+				width 15px
+				height 15px
+				vertical-align middle
+			.captainobvious
+				text-transform uppercase
+		button
+			width 80%
+			padding 20px
+			.checkedin
+				display none
+			&[disabled]
+				color gray
+				opacity 0.5
+				.notthere
+					display none
+				.checkedin
+					display initial

@@ -1,9 +1,11 @@
 define([
 	'jquery', 'underscore', 'backbone', 'app',
+	'facebook',
 	'modules/Menus'
 ],
 function (
 	$, _, Backbone, app,
+	FB,
 	Menus
 ) {
 	var Models = {};
@@ -123,6 +125,33 @@ function (
 					query: encodeURIComponent(directions)
 						.replace(/%20/g, '+')
 				}
+			});
+		},
+		events: {
+			'click .checkin button': 'checkin'
+		},
+		checkin: function (event) {
+			var that = this;
+			var sendCheckin = function () {
+				FB.api('/me/feed', 'POST', {
+					message: '#devmerge',
+					place: that.model.id
+				}, function (response) {
+					if (response && !response.error) {
+						event.currentTarget.setAttribute('disabled', true);
+					} else {
+						alert(response.error.message);
+					}
+				});
+			};
+			var askPermission = function () {
+				alert('Devmerge has not been given permission to check in ' +
+					'through your Facebook account. Poor Devmerge :(');
+			};
+			app.session.hasPermission({
+				scope: 'publish_actions',
+				success: sendCheckin,
+				error: askPermission
 			});
 		}
 	});

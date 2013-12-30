@@ -43,7 +43,13 @@ function (
 
 	app.router = new Router();
 
-	app.session = new Session()
+	app.session = new Session(null, {
+		scope: [
+			'user_checkins',
+			'read_stream',
+			'publish_actions'
+		]
+	})
 		// .on('signIn', function () {
 		// 	Backbone.history.navigate('/map', true);
 		// })

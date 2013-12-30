@@ -27,7 +27,6 @@ function (
 		login: function (event) {
 			var that = this;
 			app.session.signIn({
-				scope: 'user_checkins, read_stream',
 				success: function () {
 					var facebook = new Users.Models.Facebook();
 					var credentials = app.session.pick(

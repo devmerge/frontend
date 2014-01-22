@@ -191,11 +191,23 @@ function (
 				zoomControl: false,
 				attributionControl: false
 			});
-			map.setView([1.35, 103.8], 12);
+			map.setView([1.35, 103.8], 15);
+			var cloudmade = {
+				apikey: '002dc99eb6d146c287249753b035fcee',
+				styles: {
+					fresh: '997',
+					paleDawn: '998'
+				}
+			};
 			L.tileLayer(
 				// 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-				'//{s}.tiles.mapbox.com/v3/' +
-					'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
+				// '//{s}.tiles.mapbox.com/v3/' +
+				// 	'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
+				'http://{s}.tile.cloudmade.com' +
+					'/' + cloudmade.apikey + // API key
+					'/' + cloudmade.styles.paleDawn + // Map style
+					'/256' + // Tile size
+					'/{z}/{x}/{y}.png',
 				{
 					detectRetina: true,
 					noWrap: true
@@ -271,9 +283,9 @@ function (
 			this.venues = L.geoJson(features, {
 				pointToLayer: drawFacebookMarker
 			}).addTo(this.map);
-			this.map.fitBounds(this.venues.getBounds(), {
-				padding: [40, 40]
-			});
+			// this.map.fitBounds(this.venues.getBounds(), {
+			// 	padding: [40, 40]
+			// });
 		}
 	});
 

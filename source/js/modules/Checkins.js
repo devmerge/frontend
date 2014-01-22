@@ -191,7 +191,7 @@ function (
 				zoomControl: false,
 				attributionControl: false
 			});
-			map.setView([1.35, 103.8], 15);
+			map.setView([1.35, 103.8], 12);
 			var cloudmade = {
 				apikey: '002dc99eb6d146c287249753b035fcee',
 				styles: {

@@ -18,7 +18,7 @@ define([
 		constants: constants,
 
 		api: api(localStorage.getItem('api') === null ?
-			'http://devmerge-ksaitor.rhcloud.com/' :
+			'http://api-devmerge.rhcloud.com/' :
 			localStorage.getItem('api')
 		),
 

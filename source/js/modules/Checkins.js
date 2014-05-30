@@ -201,13 +201,13 @@ function (
 			};
 			L.tileLayer(
 				// 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-				// '//{s}.tiles.mapbox.com/v3/' +
-				// 	'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
-				'http://{s}.tile.cloudmade.com' +
-					'/' + cloudmade.apikey + // API key
-					'/' + cloudmade.styles.paleDawn + // Map style
-					'/256' + // Tile size
-					'/{z}/{x}/{y}.png',
+				'//{s}.tiles.mapbox.com/v3/' +
+					'sebdeckers.gk5lcjnp/{z}/{x}/{y}.png',
+				// 'http://{s}.tile.cloudmade.com' +
+				//	'/' + cloudmade.apikey + // API key
+				//	'/' + cloudmade.styles.paleDawn + // Map style
+				//	'/256' + // Tile size
+				//	'/{z}/{x}/{y}.png',
 				{
 					detectRetina: true,
 					noWrap: true
